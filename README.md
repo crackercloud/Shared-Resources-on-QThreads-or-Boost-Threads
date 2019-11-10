@@ -17,13 +17,13 @@ class mythread : public QThread
 {
   public:
     mythread(QString name, int *number);
-        void run();
-        void method1();
-        void method2();
+    void run();
+    void method1();
+    void method2();
 <br>
   private:
-        int *threadNum;
-        QString threadName;
+    int *threadNum;
+    QString threadName;
 };
 <br>
 #endif // MYTHREAD_H
@@ -32,59 +32,58 @@ class mythread : public QThread
 <p>I have created two public void methods.the void run() method is necessary for QThread start.</p>
 <p>Here is the code mythread.cpp file contains:</p>
 <pre><code>#include "mythread.h"
-
+<br>
 mythread::mythread(QString name, int * number)
 {
-    threadNum = number;
-    threadName = name;
+  threadNum = number;
+  threadName = name;
 }
-
+<br>
 void mythread::run()
 {
-    method1();
-    method2();
+  method1();
+  method2();
 }
-
+<br>
 void mythread::method1()
 {
-    *threadNum += 2;
-    qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
-    *threadNum *= 2;
-    qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum += 2;
+  qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum *= 2;
+  qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
 }
-
+<br>
 void mythread::method2()
 {
-    *threadNum *= 3;
-    qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
-    *threadNum /= 4;
-    qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum *= 3;
+  qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum /= 4;
+  qDebug() &lt;&lt; "I'm in " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
 }
 </code></pre>
 <p>method1() first adds  2 to given number and then multiplies by 4. method2() first mutiplies the given number by 5 and then divides by 3. These methods are called in QThread run() method.</p>
 <p>Here is the code main.cpp file contains:</p>
 <pre><code>#include &lt;QCoreApplication&gt;
 #include "mythread.h"
-
+<br>
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+  QCoreApplication a(argc, argv);
+  int number = 8;
 
-   int number = 8;
+  mythread m1Thread("thread1", &amp;number);
+  mythread m2Thread("thread2", &amp;number);
+  mythread m3Thread("thread3", &amp;number);
+  mythread m4Thread("thread4", &amp;number);
 
-   mythread m1Thread("thread1", &amp;number);
-   mythread m2Thread("thread2", &amp;number);
-   mythread m3Thread("thread3", &amp;number);
-   mythread m4Thread("thread4", &amp;number);
+  m1Thread.start();
+  m2Thread.start();
+  m3Thread.start();
+  m4Thread.start();
 
-   m1Thread.start();
-   m2Thread.start();
-   m3Thread.start();
-   m4Thread.start();
+  a.exec();
 
-   a.exec();
-
-   return 0;
+  return 0;
 }
 </code></pre>
 <p>In the main.cpp file, I created four different threads with different names in order. Each thread uses the same number by reference.</p>
@@ -118,21 +117,21 @@ The QMutex class provides access serialization between threads.</p>
 <pre><code>#ifndef MYTHREAD_H
 #define MYTHREAD_H
 #include &lt;QtCore&gt;
-
+<br>
 class mythread : public QThread
 {
 public:
-    mythread(QString name,QMutex *mutex, int * number);
-    void run();
-    void method1();
-    void method2();
-
+  mythread(QString name,QMutex *mutex, int * number);
+  void run();
+  void method1();
+  void method2();
+<br>
 private:
-    int *threadNum;
-    QString threadName;
-    QMutex *mtx;
+  int *threadNum;
+  QString threadName;
+  QMutex *mtx;
 };
-
+<br>
 #endif // MYTHREAD_H
 </code></pre>
 <p>We define a QMutex member varible as pointer. <strong>We have to use same QMutex for lock and unlock operations.</strong></p>
@@ -140,69 +139,69 @@ private:
 <pre><code>#include "mythread.h"
 #include &lt;QtCore&gt;
 #include &lt;QDebug&gt;
-
+<br>
 mythread::mythread(QString name, QMutex *mutex, int * number)
 {
     threadNum = number;
     threadName = name;
     mtx = mutex;
 }
-
+<br>
 void mythread::run()
 {
     method1();
     method2();
 }
-
+<br>
 void mythread::method1()
 {
    mtx->lock();
 
-   *threadNum += 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum
+  *threadNum += 2;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
     
-   *threadNum *= 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum *= 2;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
 
-   mtx->unlock();
+  mtx->unlock();
 }
-
+<br>
 void mythread::method2()
 {
-    mtx->lock();
+  mtx->lock();
 
-   *threadNum *= 3;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
-   *threadNum /= 4;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum *= 3;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+  *threadNum /= 4;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
 
-   mtx->unlock();
+  mtx->unlock();
 }
 </code></pre>
 <p>So, here is the code main.cpp file contains:</p>
 <pre><code>#include &lt;QCoreApplication&gt;
 #include "mythread.h"
-
+<br>
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+  QCoreApplication a(argc, argv);
 
-   int number = 8;
-   QMutex mutex;
+  int number = 8;
+  QMutex mutex;
 
-   mythread m1Thread("thread1", &amp;mutex, &amp;number);
-   mythread m2Thread("thread2", &amp;mutex, &amp;number);
-   mythread m3Thread("thread3", &amp;mutex, &amp;number);
-   mythread m4Thread("thread4", &amp;mutex, &amp;number);
+  mythread m1Thread("thread1", &amp;mutex, &amp;number);
+  mythread m2Thread("thread2", &amp;mutex, &amp;number);
+  mythread m3Thread("thread3", &amp;mutex, &amp;number);
+  mythread m4Thread("thread4", &amp;mutex, &amp;number);
 
-   m1Thread.start();
-   m3Thread.start();
-   m2Thread.start();
-   m4Thread.start();
+  m1Thread.start();
+  m3Thread.start();
+  m2Thread.start();
+  m4Thread.start();
 
-   a.exec();
+  a.exec();
 
-   return 0;
+  return 0;
 }
 </code></pre>
 <p><sub><em>When you call lock() in a thread, other threads that try to call lock() in the same place will block until the thread that got the lock calls unlock().</em></sub></p>
@@ -230,43 +229,43 @@ I&rsquo;m im  &ldquo;thread4&rdquo;  with threadNum =  63</p>
 <pre><code>#include "mythread.h"
 #include &lt;QtCore&gt;
 #include &lt;QDebug&gt;
-
+<br>
 mythread::mythread(QString name, QMutex *mutex, int * number)
 {
-    threadNum = number;
-    threadName = name;
-mtx = mutex;
+  threadNum = number;
+  threadName = name;
+  mtx = mutex;
 }
-
+<br>
 void mythread::run()
 {
     method1();
     sleep(1);
     method2();
 }
-
+<br>
 void mythread::method1()
 {
-    mtx-&gt;lock();
+  mtx-&gt;lock();
 
-   *threadNum += 2;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
-   *threadNum *= 2;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+  *threadNum += 2;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+  *threadNum *= 2;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
 
-   mtx-&gt;unlock();
+  mtx-&gt;unlock();
 }
 
 void mythread::method2()
 {
-   mtx-&gt;lock();
+  mtx-&gt;lock();
 
-   *threadNum *= 3;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
-   *threadNum /= 4;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
-
-   mtx-&gt;unlock();
+  *threadNum *= 3;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+  *threadNum /= 4;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+  
+  mtx-&gt;unlock();
 }
 </code></pre>
 <p>Here is the new results:</p>
@@ -336,23 +335,24 @@ DEPENDPATH += /opt/boost_1_54_0
 #include &lt;QtCore&gt;
 #include &lt;QDebug&gt;
 #include &lt;boost/thread.hpp&gt;
-
+<br>
 class mythread : public QObject
 {
     Q_OBJECT
+
 public:
-    mythread(QString name, boost::mutex *mutex,int * number);
-    ~mythread();
-    void Init();
-    void method1();
-    void method2();
-    void threadExec();
+  mythread(QString name, boost::mutex *mutex,int * number);
+  ~mythread();
+  void Init();
+  void method1();
+  void method2();
+  void threadExec();
 
 private:
-    int *threadNum;
-    QString threadName;
-    boost::thread threadVar;
-    boost::mutex *mtx;
+  int *threadNum;
+  QString threadName;
+  boost::thread threadVar;
+  boost::mutex *mtx;
 };
 
 #endif // MYTHREAD_H
@@ -360,50 +360,51 @@ private:
 <p>Here is mythread.cpp file:</p>
 <pre><code>#include "mythread.h"
 #include &lt;boost/thread/thread.hpp&gt;
-
+<br>
 mythread::mythread(QString name, boost::mutex *mutex,int * number)
 {
-    threadNum = number;
-    threadName = name;
-    mtx = mutex;
+  threadNum = number;
+  threadName = name;
+  mtx = mutex;
 }
-
+<br>
 mythread::~mythread()
 {
 }
-
+<br>
 void mythread::Init()
 {
-    threadVar = boost::thread(boost::bind(&amp;mythread::threadExec, this));
+  threadVar = boost::thread(boost::bind(&amp;mythread::threadExec, this));
 }
-
+<br>
 void mythread::threadExec()
 {
-    method1();
-    sleep(1);
-    method2();
+  method1();
+  sleep(1);
+  method2();
 }
 
 void mythread::method1()
 {
-    mtx-&gt;lock();
+  mtx-&gt;lock();
 
-   *threadNum += 2;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
-   *threadNum *= 2;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+  *threadNum += 2;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+  *threadNum *= 2;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
 
-   mtx-&gt;unlock();
+  mtx-&gt;unlock();
 }
-
+<br>
 void mythread::method2()
 {
-    
-   mtx-&gt;lock();
-   *threadNum *= 3;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
-   *threadNum /= 4;
-   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+  mtx-&gt;lock();
+  
+  *threadNum *= 3;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+  *threadNum /= 4;
+  qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+  
   mtx-&gt;unlock();
 }
 </code></pre>
