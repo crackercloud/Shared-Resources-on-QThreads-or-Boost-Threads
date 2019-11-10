@@ -15,16 +15,17 @@
 <br>
 class mythread : public QThread
 {
-	public:
+  public:
     mythread(QString name, int *number);
         void run();
         void method1();
         void method2();
 <br>
-private:
+  private:
         int *threadNum;
         QString threadName;
 };
+<br>
 #endif // MYTHREAD_H
 
 </code></pre>
