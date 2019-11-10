@@ -397,14 +397,13 @@ void mythread::method1()
 
 void mythread::method2()
 {
-    mtx-&gt;lock();
-
+    
+   mtx-&gt;lock();
    *threadNum *= 3;
    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
    *threadNum /= 4;
    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
-
-   mtx-&gt;unlock();
+  mtx-&gt;unlock();
 }
 </code></pre>
 <p>Here is the new results:</p>
