@@ -155,26 +155,27 @@ void mythread::run()
 
 void mythread::method1()
 {
-    mtx-&gt;lock();
+   mtx->lock();
 
-    *threadNum += 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
-    *threadNum *= 2;
+   *threadNum += 2;
+    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum
+    
+   *threadNum *= 2;
     qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
 
-    mtx-&gt;unlock();
+   mtx->unlock();
 }
 
 void mythread::method2()
 {
-    mtx-&gt;lock();
+    mtx->lock();
 
-    *threadNum *= 3;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
-    *threadNum /= 4;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+   *threadNum *= 3;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
+   *threadNum /= 4;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " with threadNum = " &lt;&lt; *threadNum;
 
-    mtx-&gt;unlock();
+   mtx->unlock();
 }
 </code></pre>
 <p>So, here is the code main.cpp file contains:</p>
