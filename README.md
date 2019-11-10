@@ -12,21 +12,21 @@
 #define MYTHREAD_H
 #include &lt;QtCore&gt;
 #include &lt;QDebug&gt;
-
+<br>
 class mythread : public QThread
 {
-public:
+	public:
     mythread(QString name, int *number);
         void run();
         void method1();
         void method2();
-
+<br>
 private:
         int *threadNum;
         QString threadName;
 };
-
 #endif // MYTHREAD_H
+
 </code></pre>
 <p>I have created two public void methods.the void run() method is necessary for QThread start.</p>
 <p>Here is the code mythread.cpp file contains:</p>
