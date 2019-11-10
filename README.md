@@ -69,21 +69,21 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    int number = 8;
+   int number = 8;
 
-    mythread m1Thread("thread1", &amp;number);
-    mythread m2Thread("thread2", &amp;number);
-    mythread m3Thread("thread3", &amp;number);
-    mythread m4Thread("thread4", &amp;number);
+   mythread m1Thread("thread1", &amp;number);
+   mythread m2Thread("thread2", &amp;number);
+   mythread m3Thread("thread3", &amp;number);
+   mythread m4Thread("thread4", &amp;number);
 
-    m1Thread.start();
-    m2Thread.start();
-    m3Thread.start();
-    m4Thread.start();
+   m1Thread.start();
+   m2Thread.start();
+   m3Thread.start();
+   m4Thread.start();
 
-    a.exec();
+   a.exec();
 
-    return 0;
+   return 0;
 }
 </code></pre>
 <p>In the main.cpp file, I created four different threads with different names in order. Each thread uses the same number by reference.</p>
@@ -186,22 +186,22 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    int number = 8;
-    QMutex mutex;
+   int number = 8;
+   QMutex mutex;
 
-    mythread m1Thread("thread1", &amp;mutex, &amp;number);
-    mythread m2Thread("thread2", &amp;mutex, &amp;number);
-    mythread m3Thread("thread3", &amp;mutex, &amp;number);
-    mythread m4Thread("thread4", &amp;mutex, &amp;number);
+   mythread m1Thread("thread1", &amp;mutex, &amp;number);
+   mythread m2Thread("thread2", &amp;mutex, &amp;number);
+   mythread m3Thread("thread3", &amp;mutex, &amp;number);
+   mythread m4Thread("thread4", &amp;mutex, &amp;number);
 
-    m1Thread.start();
-    m3Thread.start();
-    m2Thread.start();
-    m4Thread.start();
+   m1Thread.start();
+   m3Thread.start();
+   m2Thread.start();
+   m4Thread.start();
 
-    a.exec();
+   a.exec();
 
-    return 0;
+   return 0;
 }
 </code></pre>
 <p><sub><em>When you call lock() in a thread, other threads that try to call lock() in the same place will block until the thread that got the lock calls unlock().</em></sub></p>
@@ -248,24 +248,24 @@ void mythread::method1()
 {
     mtx-&gt;lock();
 
-    *threadNum += 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
-    *threadNum *= 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum += 2;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum *= 2;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
 
-    mtx-&gt;unlock();
+   mtx-&gt;unlock();
 }
 
 void mythread::method2()
 {
-    mtx-&gt;lock();
+   mtx-&gt;lock();
 
-    *threadNum *= 3;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
-    *threadNum /= 4;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum *= 3;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum /= 4;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
 
-    mtx-&gt;unlock();
+   mtx-&gt;unlock();
 }
 </code></pre>
 <p>Here is the new results:</p>
@@ -387,24 +387,24 @@ void mythread::method1()
 {
     mtx-&gt;lock();
 
-    *threadNum += 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
-    *threadNum *= 2;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum += 2;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum *= 2;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method1() with threadNum = " &lt;&lt; *threadNum;
 
-    mtx-&gt;unlock();
+   mtx-&gt;unlock();
 }
 
 void mythread::method2()
 {
     mtx-&gt;lock();
 
-    *threadNum *= 3;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
-    *threadNum /= 4;
-    qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum *= 3;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
+   *threadNum /= 4;
+   qDebug() &lt;&lt; "I'm im " &lt;&lt; threadName &lt;&lt; " method2() with threadNum = " &lt;&lt; *threadNum;
 
-    mtx-&gt;unlock();
+   mtx-&gt;unlock();
 }
 </code></pre>
 <p>Here is the new results:</p>
