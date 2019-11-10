@@ -294,10 +294,10 @@ I&rsquo;m im  &ldquo;thread4&rdquo;  method2() with threadNum =  58</p>
 <p>It&rsquo;s important to implement boost library path and include path to .pro file. In our case, boost is installed under /opt/ path.</p>
 <p>Here is the .pro file that we used:</p>
 <pre><code>QT -= gui
-
+<br>
 CONFIG += c++11 console
 CONFIG -= app_bundle
-
+<br>
 #The following define makes your compiler emit warnings if you use
 #any feature of Qt which as been marked deprecated (the exact warnings
 #depend on your compiler). Please consult the documentation of the
