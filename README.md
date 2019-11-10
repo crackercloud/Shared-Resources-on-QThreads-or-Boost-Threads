@@ -70,19 +70,19 @@ int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
   int number = 8;
-
+  <br>
   mythread m1Thread("thread1", &amp;number);
   mythread m2Thread("thread2", &amp;number);
   mythread m3Thread("thread3", &amp;number);
   mythread m4Thread("thread4", &amp;number);
-
+  <br>
   m1Thread.start();
   m2Thread.start();
   m3Thread.start();
   m4Thread.start();
-
+  <br>
   a.exec();
-
+  <br>
   return 0;
 }
 </code></pre>
