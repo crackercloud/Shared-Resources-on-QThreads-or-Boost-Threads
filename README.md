@@ -432,5 +432,5 @@ I&rsquo;m im  &ldquo;thread4&rdquo;  method2() with threadNum =  58</p>
 <p>I hope my experience will be useful for all.</p>
 <p><em><br />
 Ömer BULUT<br />
-Elecrical &amp; Electronics Engineer<br />
+Electrical &amp; Electronics Engineer<br />
 Software Developer</em></p>
